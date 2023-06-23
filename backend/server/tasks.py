@@ -5,10 +5,14 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
-from celery import Celery
+from celery import shared_task
 import requests
 from dotenv import load_dotenv
 import os
+import time
+from backend.celery import app
+import datetime
+from django.conf import settings
 
 load_dotenv()
 
@@ -39,21 +43,40 @@ def send_email_with_pdf_attachment(smtp_server, smtp_port, smtp_username,
         print("Error sending email:", str(e))
 
 
+@app.task(name="send_weekly_emails")
 def send_weekly_emails():
-    # Define your SMTP server and authentication details
-    smtp_server = "smtp.gmail.com"
-    smtp_port = 587
-    smtp_username = os.environ.get('SMTP_USERNAME')
-    smtp_password = os.environ.get('SMTP_PASSWORD')
+    try:
+        # Define your SMTP server and authentication details
+        smtp_server = settings.EMAIL_HOST
+        smtp_port = settings.EMAIL_PORT
+        smtp_username = settings.EMAIL_HOST_USER
+        smtp_password = settings.EMAIL_HOST_PASSWORD
 
-    # Define email details
-    sender_email = os.environ.get('SMTP_USERNAME')
-    recipient_email = "RECEIPIENT_EMAIL"
-    subject = "Weekly Email with PDF attachment"
-    body = "Please find attached the weekly PDF document."
-    pdf_url = "https://www.africau.edu/images/default/sample.pdf"
+        # Define email details
+        sender_email = os.environ.get('SMTP_USERNAME')
+        recipient_email = "RECEPIENT_MAIL"
+        subject = "Weekly Email with PDF attachment"
+        body = "Please find attached the weekly PDF document."
+        pdf_url = "https://www.africau.edu/images/default/sample.pdf"
 
-    # Send the email with PDF attachment
-    send_email_with_pdf_attachment(smtp_server, smtp_port, smtp_username,
-                                   smtp_password, sender_email, recipient_email,
-                                   subject, body, pdf_url)
+        # Send the email with PDF attachment
+        send_email_with_pdf_attachment(smtp_server, smtp_port, smtp_username,
+                                       smtp_password, sender_email, recipient_email,
+                                       subject, body, pdf_url)
+    except:
+        print("error")
+
+
+# @app.task(name="send_weekly_email")
+# def send_weekly_email():
+#     try:
+#         today = datetime.date.today()
+#         week_ago = today - datetime.timedelta(days=7)
+#     except:
+#         print("error")
+
+
+@shared_task
+def sleepy(duration):
+    time.sleep(duration)
+    return None
