@@ -3,6 +3,9 @@ target/
 .idea/
 *.iml
 
+# Environment Variables
+/.env/
+
 # Sublime
 *.sublime-workspace
 
