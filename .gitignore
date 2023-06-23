@@ -4,7 +4,7 @@ target/
 *.iml
 
 # Environment Variables
-/.env/
+.env
 
 # Sublime
 *.sublime-workspace
