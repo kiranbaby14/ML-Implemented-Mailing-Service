@@ -54,7 +54,7 @@ def send_weekly_emails():
 
         # Define email details
         sender_email = os.environ.get('SMTP_USERNAME')
-        recipient_email = "RECEPIENT_MAIL"
+        recipient_email = os.environ.get('RECEIPIENT_EMAIL')
         subject = "Weekly Email with PDF attachment"
         body = "Please find attached the weekly PDF document."
         pdf_url = "https://www.africau.edu/images/default/sample.pdf"
