@@ -7,7 +7,7 @@ import requests
 # Create your views here.
 
 def home(request):
-    return HttpResponse("These are ur details")
+    return HttpResponse("Welcome to ur home page")
 
 
 def user_details(request):
