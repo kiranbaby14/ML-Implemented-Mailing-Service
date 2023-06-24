@@ -76,7 +76,7 @@ def send_weekly_emails():
 #         print("error")
 
 
-@shared_task
-def sleepy(duration):
-    time.sleep(duration)
-    return None
+# @shared_task
+# def sleepy(duration):
+#     time.sleep(duration)
+#     return None
