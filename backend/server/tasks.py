@@ -57,7 +57,7 @@ def send_weekly_emails():
         recipient_email = os.environ.get('RECEIPIENT_EMAIL')
         subject = "Weekly Email with PDF attachment"
         body = "Please find attached the weekly PDF document."
-        pdf_url = "https://www.africau.edu/images/default/sample.pdf"
+        pdf_url = "https://link.springer.com/content/pdf/10.1007/s10462-023-10519-y?pdf=openurl"
 
         # Send the email with PDF attachment
         send_email_with_pdf_attachment(smtp_server, smtp_port, smtp_username,

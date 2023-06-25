@@ -1,0 +1,55 @@
+version: '3'
+
+services:
+
+  #Django application
+  django:
+    build: .
+    container_name: django_server
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app/
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+      - db
+
+  # Redis Container
+  redis:
+    image: redis:alpine
+    container_name: redis
+    expose:
+      - '6379'
+    ports:
+      - '6379:6379'
+
+  db:
+    image: mongo:latest
+    volumes:
+      - db_data:/data/db
+
+  celery_worker:
+    restart: always
+    build: .
+    command: celery -A backend worker -l info -P eventlet
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+      - redis
+
+
+  celery_beat:
+    restart: always
+    build: .
+    command: celery -A backend beat
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+      - redis
+
+
+volumes:
+  db_data:

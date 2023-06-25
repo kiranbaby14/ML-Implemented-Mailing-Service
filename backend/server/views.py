@@ -1,7 +1,11 @@
+import os
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import JsonResponse
 import requests
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 # Create your views here.
@@ -18,28 +22,19 @@ def user_interests(request):
     return HttpResponse("ooh noice interests!")
 
 
-def ieee_api_view():
+def api_view(request):
     # Make a request to the IEEE API
 
+    base_url = "https://api.springernature.com/meta/v2/json"
     # API key
-    api_key = 'YOUR_API_KEY'
-
-    # Base URL for the API
-    base_url = 'https://ieeexploreapi.ieee.org/api/v1/search/articles'
-
-    # Query parameters
-    query_params = {
-        'apikey': api_key,
-        'format': 'json',
-        'max_results': 10,  # Adjust as per your requirements
-        'start_record': 1,
-        'sort_order': 'desc',
-        'sort_field': 'article_number',
-        'querytext': 'YOUR_TOPIC'  # Specify your topic here
+    api_key = os.environ.get('SPRINGER_API_KEY')
+    params = {
+        "q": 'Papers+Artificial+Intelligence',
+        "api_key": api_key
     }
 
     # Make the API request
-    response = requests.get(base_url, params=query_params)
+    response = requests.get(base_url, params=params)
 
     # Check if the request was successful
     if response.status_code == 200:

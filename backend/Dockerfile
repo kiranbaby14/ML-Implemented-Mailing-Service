@@ -1,0 +1,18 @@
+# uSE AN OFFICIAL PYTHON RUNTIME PARENT IMAGE
+FROM python:3.10.4
+
+# SETTING THE ENVIRONMENT VARIABLE
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE 1
+
+#SETTING WORKING DIRECTORY
+WORKDIR /app
+
+# INSTALL PYTHON PACKAGES
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+
+COPY . .
+
+# RUN MIGRATIONS
+RUN python manage.py makemigrations && python manage.py migrate
