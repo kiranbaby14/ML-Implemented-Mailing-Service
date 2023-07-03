@@ -71,6 +71,10 @@ SIMPLE_JWT = {
     )
 }
 
+DOMAIN = 'localhost:3000'
+# DOMAIN = ('localhost:3000')
+# SITE_NAME = ('site_name')
+
 DJOSER = {
     'LOGIN_FIELD': 'email',
     'USER_CREATE_PASSWORD_RETYPE': True,

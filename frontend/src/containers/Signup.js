@@ -7,14 +7,13 @@ import axios from 'axios';
 const Signup = ({ signup, isAuthenticated }) => {
     const [accountCreated, setAccountCreated] = useState(false);
     const [formData, setFormData] = useState({
-        first_name: '',
-        last_name: '',
+        name: '',
         email: '',
         password: '',
         re_password: ''
     });
 
-    const { first_name, last_name, email, password, re_password } = formData;
+    const { name, email, password, re_password } = formData;
 
     const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
@@ -22,7 +21,7 @@ const Signup = ({ signup, isAuthenticated }) => {
         e.preventDefault();
 
         if (password === re_password) {
-            signup(first_name, last_name, email, password, re_password);
+            signup(name, email, password, re_password);
             setAccountCreated(true);
         }
     };
@@ -64,13 +63,13 @@ const Signup = ({ signup, isAuthenticated }) => {
                         className='form-control'
                         type='text'
                         placeholder='First Name*'
-                        name='first_name'
-                        value={first_name}
+                        name='name'
+                        value={name}
                         onChange={e => onChange(e)}
                         required
                     />
                 </div>
-                <div className='form-group'>
+                {/* <div className='form-group'>
                     <input
                         className='form-control'
                         type='text'
@@ -80,7 +79,7 @@ const Signup = ({ signup, isAuthenticated }) => {
                         onChange={e => onChange(e)}
                         required
                     />
-                </div>
+                </div> */}
                 <div className='form-group'>
                     <input
                         className='form-control'

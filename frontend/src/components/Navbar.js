@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { logout } from '../actions/auth';
 
 const Navbar = ({ logout, isAuthenticated }) => {
+    
     const [redirect, setRedirect] = useState(false);
 
     const logout_user = () => {
@@ -52,7 +53,7 @@ const Navbar = ({ logout, isAuthenticated }) => {
                     </ul>
                 </div>
             </nav>
-            {redirect ? <Navigate to='/' /> : <></>}
+            {redirect ? <Navigate to='/' /> : null}
         </>
     );
 };
