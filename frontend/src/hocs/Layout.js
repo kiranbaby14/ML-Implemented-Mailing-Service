@@ -7,7 +7,12 @@ import { useLocation } from 'react-router-dom';
 const Layout = ({ checkAuthenticated, load_user, children, isAuthenticated }) => {
 
     const location = useLocation();
-    const isLoginOrSignup = location.pathname === '/login' || location.pathname === '/signup';
+    const isLoginOrSignup = location.pathname === '/login' ||
+        location.pathname === '/signup' || 
+        location.pathname === '/reset-password' ||
+        location.pathname === '/password/reset/confirm/:uid/:token' ||
+        location.pathname === '/activate/:uid/:token' || 
+        location.pathname === '/email/info';
 
     useEffect(() => {
         checkAuthenticated();
@@ -16,7 +21,7 @@ const Layout = ({ checkAuthenticated, load_user, children, isAuthenticated }) =>
 
     return (
         <div>
-             {!isLoginOrSignup && <Navbar />}
+            {!isLoginOrSignup && <Navbar />}
             {children}
         </div>
     );

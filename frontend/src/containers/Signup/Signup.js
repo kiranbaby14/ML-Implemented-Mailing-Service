@@ -66,7 +66,7 @@ const Signup = ({ signup, isAuthenticated }) => {
         return <Navigate to='/' />
     }
     if (accountCreated) {
-        return <Navigate to='/login' />
+        return <Navigate to='/email/info' />
     }
 
     return (
