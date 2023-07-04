@@ -24,7 +24,7 @@ const initialState = {
     access: localStorage.getItem('access'),
     refresh: localStorage.getItem('refresh'),
     isAuthenticated: null,
-    user: null
+    user: null,
 };
 
 export default function(state = initialState, action) {
@@ -79,7 +79,7 @@ export default function(state = initialState, action) {
                 access: null,
                 refresh: null,
                 isAuthenticated: false,
-                user: null
+                user: null,
             }
         case PASSWORD_RESET_SUCCESS:
         case PASSWORD_RESET_FAIL:

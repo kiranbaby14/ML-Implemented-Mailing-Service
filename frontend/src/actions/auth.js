@@ -30,11 +30,11 @@ export const load_user = () => async dispatch => {
                 'Authorization': `JWT ${localStorage.getItem('access')}`,
                 'Accept': 'application/json'
             }
-        }; 
+        };
 
         try {
             const res = await axios.get(`${process.env.REACT_APP_API_URL}/auth/users/me/`, config);
-    
+
             dispatch({
                 type: USER_LOADED_SUCCESS,
                 payload: res.data
@@ -122,7 +122,7 @@ export const checkAuthenticated = () => async dispatch => {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             }
-        }; 
+        };
 
         const body = JSON.stringify({ token: localStorage.getItem('access') });
 
@@ -170,14 +170,16 @@ export const login = (email, password) => async dispatch => {
 
         dispatch(load_user());
     } catch (err) {
-        console.log(err.message)
         dispatch({
             type: LOGIN_FAIL
         })
+
+        // If there's an error, throw it to be caught in the component
+        throw err;
     }
 };
 
-export const signup = (name, email, password, re_password) => async dispatch => {
+export const signup = (name, email, password, re_password) => async (dispatch) => {
     const config = {
         headers: {
             'Content-Type': 'application/json'
@@ -193,10 +195,14 @@ export const signup = (name, email, password, re_password) => async dispatch => 
             type: SIGNUP_SUCCESS,
             payload: res.data
         });
+
     } catch (err) {
         dispatch({
-            type: SIGNUP_FAIL
+            type: SIGNUP_FAIL,
         })
+
+        // If there's an error, throw it to be caught in the component
+        throw err;
     }
 };
 

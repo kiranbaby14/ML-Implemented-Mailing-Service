@@ -2,8 +2,8 @@ import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Layout from './hocs/Layout';
 import Home from './containers/Home'
-import Login from './containers/Login'
-import Signup from './containers/Signup'
+import Login from './containers/Login/Login'
+import Signup from './containers/Signup/Signup'
 import ResetPassword from './containers/ResetPassword'
 import ResetPasswordConfirm from './containers/ResetPasswordConfirm'
 import Activate from './containers/Activate'

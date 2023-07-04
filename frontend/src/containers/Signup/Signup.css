@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css?family=Numans');
+
+#signup-page {
+    background-image: url('https://images.pexels.com/photos/193003/pexels-photo-193003.jpeg?auto=compress&cs=tinysrgb&w=1980');
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100vh;
+    font-family: 'Numans', sans-serif;
+}
+
+#signup-page .container {
+    height: 100%;
+    align-content: center;
+}
+
+#signup-page .card {
+    height: 70%;
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 400px;
+    background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+#signup-page .card-header h3 {
+    color: white;
+}
+
+#signup-page .input-group-prepend span {
+    width: 50px;
+    background-color: #FFC312;
+    color: black;
+    border: 0 !important;
+}
+
+#signup-page #signup-page input:focus {
+    outline: 0 0 0 0 !important;
+    box-shadow: 0 0 0 0 !important;
+
+}
+
+#signup-page .login_btn {
+    color: black;
+    background-color: #FFC312;
+    width: 100px;
+}
+
+#signup-page .login_btn:hover {
+    color: black;
+    background-color: white;
+}
+
+#signup-page .links {
+    color: white;
+}
+
+#signup-page .links a {
+    margin-left: 4px;
+}
+
+
+#signup-page .horizontal-line-container {
+    position: relative;
+}
+
+#signup-page .horizontal-line {
+    height: 1px;
+    width: 100%;
+    background-color: #fff;
+}
+
+#signup-page .or-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 0 10px;
+    color: white;
+    background-color: #000000;
+}
