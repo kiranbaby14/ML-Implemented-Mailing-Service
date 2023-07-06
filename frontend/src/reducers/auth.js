@@ -31,8 +31,13 @@ const initialState = {
     refresh: localStorage.getItem('refresh'),
     isAuthenticated: null,
     user: null,
-    preferences: null,
-    preferencePaperAbstracts: null
+    preferences: [
+        { "label": "AI", "variant": "outlined" },
+        { "label": "ML", "variant": "outlined" },
+        { "label": "Computer Science", "variant": "outlined" },
+        { "label": "Computer Science", "variant": "outlined" }
+    ],
+    preferencePaperAbstracts: []
 };
 
 export default function (state = initialState, action) {

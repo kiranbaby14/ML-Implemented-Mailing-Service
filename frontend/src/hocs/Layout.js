@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import { connect } from 'react-redux';
-import { checkAuthenticated, load_user } from '../actions/auth';
+import { checkAuthenticated, load_user, user_preference_retrieve } from '../actions/auth';
 import { useLocation } from 'react-router-dom';
 
-const Layout = ({ checkAuthenticated, load_user, children, isAuthenticated }) => {
+const Layout = ({ checkAuthenticated, load_user, user_preference_retrieve, children, isAuthenticated }) => {
 
     const location = useLocation();
     const isLoginOrSignup = location.pathname === '/login' ||
@@ -17,6 +17,7 @@ const Layout = ({ checkAuthenticated, load_user, children, isAuthenticated }) =>
     useEffect(() => {
         checkAuthenticated();
         load_user();
+        user_preference_retrieve();
     }, []);
 
     return (
@@ -32,4 +33,4 @@ const mapStateToProps = state => ({
 });
 
 
-export default connect(mapStateToProps, { checkAuthenticated, load_user })(Layout);
+export default connect(mapStateToProps, { checkAuthenticated, load_user, user_preference_retrieve })(Layout);

@@ -9,37 +9,18 @@ import { user_preference_retrieve, user_preference_save } from '../../actions/au
 import "./Home.css"
 
 
-const Home = ({ preferences, user_preference_retrieve, user_preference_save }) => {
+const Home = ({ preferences, isAuthenticated, user, user_preference_retrieve, user_preference_save }) => {
 
     const ListItem = styled('li')(({ theme }) => ({
         margin: theme.spacing(0.5),
     }));
 
-    const [tagInfo, setTagInfo] = useState([
-        { "label": "AI", "variant": "outlined" },
-        { "label": "ML", "variant": "outlined" },
-        { "label": "Computer Science", "variant": "outlined" },
-        { "label": "Computer Science", "variant": "outlined" }
-    ])
+    const [tagInfo, setTagInfo] = useState([])
     const [saveBtnActive, setSaveBtnActive] = useState(false)
-    const [isFetchData, setIsFetchData] = useState(false)
 
     useEffect(() => {
-        const fetchTagInfo = async () => {
-            try {
-                await user_preference_retrieve()
-                setIsFetchData(true)
-            }
-            catch (err) {
-                console.log("Error fetching data:", err);
-            }
-        }
-        fetchTagInfo();
-
-        if (isFetchData){
-            setTagInfo(preferences)
-        }
-    }, [isFetchData])
+        setTagInfo(preferences)
+    }, [preferences])
 
 
     const handleClick = (index) => {
@@ -134,7 +115,9 @@ const Home = ({ preferences, user_preference_retrieve, user_preference_save }) =
 }
 
 const mapStateToProps = state => ({
-    preferences: state.auth.preferences
+    preferences: state.auth.preferences,
+    isAuthenticated: state.auth.isAuthenticated,
+    user: state.auth.user
 });
 
 export default connect(mapStateToProps, { user_preference_retrieve, user_preference_save })(Home);
