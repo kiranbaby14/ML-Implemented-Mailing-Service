@@ -15,6 +15,13 @@ class UserAccountManager(BaseUserManager):
 
         return user
 
+    def create_superuser(self, email, name, password=None):
+        user = self.create_user(email, name, password=password)
+        user.is_staff = True
+        user.is_superuser = True
+        user.save()
+        return user
+
 
 # Create your models here.
 class UserAccount(AbstractBaseUser, PermissionsMixin):
@@ -33,3 +40,26 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+
+
+class Tag(models.Model):
+    tags = models.TextField(default='')
+
+    def __str__(self):
+        return self.tags
+
+
+class TagLabels(models.Model):
+    labels = models.TextField(default='')
+
+    def __str__(self):
+        return self.labels
+
+
+class UserTagPreference(models.Model):
+    user = models.ForeignKey(UserAccount, on_delete=models.CASCADE)
+    tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
+    tag_labels = models.ForeignKey(TagLabels, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.user} - {self.tag_labels}'

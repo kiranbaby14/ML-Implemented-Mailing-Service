@@ -14,7 +14,7 @@ const Activate = ({ verify, match }) => {
     };
 
     if (verified) {
-        return <Navigate to='/' />
+        return <Navigate to='/login' />
     }
 
     return (

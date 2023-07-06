@@ -17,7 +17,13 @@ import {
     GOOGLE_AUTH_FAIL,
     FACEBOOK_AUTH_SUCCESS,
     FACEBOOK_AUTH_FAIL,
-    LOGOUT
+    LOGOUT,
+    USER_PREFERENCE_SAVE_SUCCESS,
+    USER_PREFERENCE_SAVE_FAIL,
+    USER_PREFERENCE_RETRIEVAL_SUCCESS,
+    USER_PREFERENCE_RETRIEVAL_FAIL,
+    USER_PREFERENCE_PAPER_DATA_RETRIEVAL_SUCCESS,
+    USER_PREFERENCE_PAPER_DATA_RETRIEVAL_FAIL
 } from '../actions/types';
 
 const initialState = {
@@ -25,12 +31,14 @@ const initialState = {
     refresh: localStorage.getItem('refresh'),
     isAuthenticated: null,
     user: null,
+    preferences: null,
+    preferencePaperAbstracts: null
 };
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
     const { type, payload } = action;
 
-    switch(type) {
+    switch (type) {
         case AUTHENTICATED_SUCCESS:
             return {
                 ...state,
@@ -63,6 +71,8 @@ export default function(state = initialState, action) {
                 isAuthenticated: false
             }
         case USER_LOADED_FAIL:
+            localStorage.removeItem('access');
+            localStorage.removeItem('refresh');
             return {
                 ...state,
                 user: null
@@ -89,6 +99,11 @@ export default function(state = initialState, action) {
         case ACTIVATION_FAIL:
             return {
                 ...state
+            }
+        case USER_PREFERENCE_RETRIEVAL_SUCCESS:
+            return {
+                ...state,
+                preferences: payload
             }
         default:
             return state

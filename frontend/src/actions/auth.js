@@ -18,7 +18,13 @@ import {
     GOOGLE_AUTH_FAIL,
     FACEBOOK_AUTH_SUCCESS,
     FACEBOOK_AUTH_FAIL,
-    LOGOUT
+    LOGOUT,
+    USER_PREFERENCE_SAVE_SUCCESS,
+    USER_PREFERENCE_SAVE_FAIL,
+    USER_PREFERENCE_RETRIEVAL_SUCCESS,
+    USER_PREFERENCE_RETRIEVAL_FAIL,
+    USER_PREFERENCE_PAPER_DATA_RETRIEVAL_SUCCESS,
+    USER_PREFERENCE_PAPER_DATA_RETRIEVAL_FAIL,
 } from './types';
 
 
@@ -277,3 +283,51 @@ export const logout = () => dispatch => {
         type: LOGOUT
     });
 };
+
+export const user_preference_save = (data) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `JWT ${localStorage.getItem('access')}`,
+        }
+    };
+
+    const body = JSON.stringify(data);
+
+    try {
+        await axios.post(`${process.env.REACT_APP_API_URL}/api/save-tag-preference/`, body, config);
+
+        dispatch({
+            type: USER_PREFERENCE_SAVE_SUCCESS
+        });
+
+    } catch (err) {
+        dispatch({
+            type: USER_PREFERENCE_SAVE_FAIL
+        });
+    }
+}
+
+export const user_preference_retrieve = () => async dispatch => {
+    
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `JWT ${localStorage.getItem('access')}`,
+        }
+    };
+
+
+    try {
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/get-tag-preference/`, config);
+        dispatch({
+            type: USER_PREFERENCE_RETRIEVAL_SUCCESS,
+            payload: res.data
+        });
+
+    } catch (err) {
+        dispatch({
+            type: USER_PREFERENCE_RETRIEVAL_FAIL
+        });
+    }
+}

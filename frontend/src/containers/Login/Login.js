@@ -24,8 +24,9 @@ const Login = ({ login, isAuthenticated }) => {
         e.preventDefault();
 
         try {
+            
             await login(email, password);
-            console.log("1")
+
         } catch (err) {
             const obj = JSON.parse(err.request.response)
             const message = obj[Object.keys(obj)[0]]
