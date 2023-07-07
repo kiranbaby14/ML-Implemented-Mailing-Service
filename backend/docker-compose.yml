@@ -9,6 +9,12 @@ services:
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/app/
+    environment:
+      SMTP_USERNAME: "${SMTP_USERNAME}"
+      SMTP_PASSWORD: "${SMTP_PASSWORD}"
+      SECRET_KEY: "${SECRET_KEY}"
+      DEBUG: "${DEBUG}"
+      SPRINGER_API_KEY: "${SPRINGER_API_KEY}"
     ports:
       - "8000:8000"
     depends_on:

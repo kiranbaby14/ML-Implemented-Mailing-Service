@@ -9,6 +9,6 @@ urlpatterns = [
     path('auth/', include('djoser.social.urls')),
     path('api/save-tag-preference/', views.save_user_tag_preference, name='save_tag_preference'),
     path('api/get-tag-preference/', views.get_user_tag_preference, name='get_tag_preference'),
+
 ]
 
-# urlpatterns += [re_path(r'^.*', TemplateView.as_view(template_name='index.html'))]

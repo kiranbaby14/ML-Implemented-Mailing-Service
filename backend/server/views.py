@@ -6,6 +6,7 @@ import requests
 import re
 from dotenv import load_dotenv
 
+
 load_dotenv()
 
 
@@ -20,17 +21,17 @@ def user_details(request):
 
 
 def user_interests(request):
-    return HttpResponse("ooh noice interests!")
+    return HttpResponse("ooh nice interests!")
 
 
-def api_view(request):
+def api_view_1(request):
     # Make a request to the IEEE API
-
+    print("yep!!!")
     base_url = "https://api.springernature.com/meta/v2/json"
     # API key
     api_key = os.environ.get('SPRINGER_API_KEY')
     params = {
-        "q": 'Papers+Artificial+Intelligence',
+        "q": 'Papers+Artificial+Intelligence OR computer+science OR Biology',
         "api_key": api_key
     }
 
@@ -89,7 +90,6 @@ def save_user_tag_preference(request):
     return Response({'message': 'User tag preferences saved.'})
 
 
-
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_user_tag_preference(request):
@@ -100,7 +100,9 @@ def get_user_tag_preference(request):
 
     # Extract the tag names from the preferences
     tag_names = [preference.tag.tags for preference in tag_preferences]
-
-    tag_names = re.findall(r'{[^}]+}', tag_names[0])
-    tag_names = [json.loads(dicti) for dicti in tag_names]
-    return Response(tag_names)
+    if tag_names:  # execute only if list is not empty
+        tag_names = re.findall(r'{[^}]+}', tag_names[0])
+        tag_names = [json.loads(dicti) for dicti in tag_names]
+        return Response(tag_names)
+    else:
+        return Response([])
