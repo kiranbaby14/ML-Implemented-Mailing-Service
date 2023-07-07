@@ -15,17 +15,18 @@ const Home = ({ preferences, isAuthenticated, user, user_preference_retrieve, us
         margin: theme.spacing(0.5),
     }));
 
-    const [tagInfo, setTagInfo] = useState([])
+    const [tagInfo, setTagInfo] = useState(preferences)
     const [saveBtnActive, setSaveBtnActive] = useState(false)
 
     useEffect(() => {
+        
         setTagInfo(preferences)
+
     }, [preferences])
 
 
     const handleClick = (index) => {
         setTagInfo((prev) => {
-            setSaveBtnActive(true);
             const updatedTags = [...prev]; // Create a copy of the tags array
             updatedTags[index] = {
                 ...updatedTags[index],
@@ -33,6 +34,8 @@ const Home = ({ preferences, isAuthenticated, user, user_preference_retrieve, us
             }; // Update the variant property of the specific tag
             return updatedTags; // Return the updated array
         })
+
+         setSaveBtnActive(true);
     };
 
     const handleSaveBtnClick = async () => {

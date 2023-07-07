@@ -40,11 +40,15 @@ export const load_user = () => async dispatch => {
 
         try {
             const res = await axios.get(`${process.env.REACT_APP_API_URL}/auth/users/me/`, config);
+            
+            dispatch(user_preference_retrieve()); // fetch user preference details
 
             dispatch({
                 type: USER_LOADED_SUCCESS,
                 payload: res.data
             });
+
+            
         } catch (err) {
             dispatch({
                 type: USER_LOADED_FAIL

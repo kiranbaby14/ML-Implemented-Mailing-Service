@@ -15,19 +15,20 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import { red } from '@mui/material/colors';
 
 const Navbar = ({ logout, isAuthenticated }) => {
 
     const pages = ['Products', 'Pricing', 'Blog'];
     const settings = ['Logout'];
-    // const [redirect, setRedirect] = useState(false);
+    const [redirect, setRedirect] = useState(false);
 
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 
     const logout_user = () => {
         logout();
-        // setRedirect(true);
+        setRedirect(true);
     };
 
     const guestLinks = () => (
@@ -94,7 +95,7 @@ const Navbar = ({ logout, isAuthenticated }) => {
     return (
         <>
 
-            {/* {redirect ? <Navigate to='/' /> : null} */}
+            {redirect ? <Navigate to='/login' /> : null}
 
             <AppBar position="sticky" >
                 <Container maxWidth="xl">
@@ -152,8 +153,8 @@ const Navbar = ({ logout, isAuthenticated }) => {
                         <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         </Box>
 
-                        {isAuthenticated ? authLinks() : guestLinks()}
-
+                        {/* {isAuthenticated ? authLinks() : guestLinks()} */}
+                        {authLinks()}
                     </Toolbar>
                 </Container>
             </AppBar>

@@ -19,7 +19,6 @@ const Layout = ({ checkAuthenticated, load_user, user_preference_retrieve, child
         const apiCalls = async () => {
             await checkAuthenticated();
             await load_user();
-            await user_preference_retrieve();
         }
         apiCalls();
 

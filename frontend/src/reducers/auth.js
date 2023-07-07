@@ -68,7 +68,7 @@ export default function (state = initialState, action) {
         case USER_LOADED_SUCCESS:
             return {
                 ...state,
-                user: payload
+                user: payload,
             }
         case AUTHENTICATED_FAIL:
             return {

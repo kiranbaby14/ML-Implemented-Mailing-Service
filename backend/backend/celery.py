@@ -22,7 +22,7 @@ app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
 app.conf.beat_schedule = {
     'send_weekly_emails': {
         'task': 'send_weekly_emails',
-        'schedule': crontab(minute='*/1')
+        # 'schedule': crontab(minute='*/1')
     }
 }
 
