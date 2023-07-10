@@ -56,10 +56,18 @@ class TagLabels(models.Model):
         return self.labels
 
 
+class AlreadySentPDFS(models.Model):
+    pdfs = models.TextField(default='')
+
+    def __str__(self):
+        return self.sent_pdfs
+
+
 class UserTagPreference(models.Model):
     user = models.ForeignKey(UserAccount, on_delete=models.CASCADE)
     tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
     tag_labels = models.ForeignKey(TagLabels, on_delete=models.CASCADE)
+    sent_pdfs = models.ForeignKey(AlreadySentPDFS, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return f'{self.user} - {self.tag_labels}'

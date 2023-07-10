@@ -5,11 +5,12 @@ import Chip from '@mui/material/Chip';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
-import { user_preference_retrieve, user_preference_save } from '../../actions/auth';
+import { user_preference_retrieve, user_preference_save, checkAuthenticated } from '../../actions/auth';
 import "./Home.css"
+import { Navigate } from 'react-router-dom';
 
 
-const Home = ({ preferences, isAuthenticated, user, user_preference_retrieve, user_preference_save }) => {
+const Home = ({ preferences, isAuthenticated, user, user_preference_retrieve, checkAuthenticated, user_preference_save }) => {
 
     const ListItem = styled('li')(({ theme }) => ({
         margin: theme.spacing(0.5),
@@ -19,10 +20,25 @@ const Home = ({ preferences, isAuthenticated, user, user_preference_retrieve, us
     const [saveBtnActive, setSaveBtnActive] = useState(false)
 
     useEffect(() => {
-        
+        console.log(preferences)
         setTagInfo(preferences)
 
     }, [preferences])
+
+    useEffect(() => {
+
+        if (isAuthenticated) {
+            const timer = setInterval(() => {
+                console.log("edjbbh")
+                checkAuthenticated();
+            }, 10 * 1000 * 1000);
+
+            // Cleanup function
+            return () => {
+                clearInterval(timer);
+            };
+        }
+    }, []);
 
 
     const handleClick = (index) => {
@@ -35,7 +51,7 @@ const Home = ({ preferences, isAuthenticated, user, user_preference_retrieve, us
             return updatedTags; // Return the updated array
         })
 
-         setSaveBtnActive(true);
+        setSaveBtnActive(true);
     };
 
     const handleSaveBtnClick = async () => {
@@ -44,22 +60,26 @@ const Home = ({ preferences, isAuthenticated, user, user_preference_retrieve, us
 
 
     return (
-        <div className='ml-2' id="home">
-        
-            <div className='jumbotron left'>
-                <div className='inner'>
-                    <h1 className='display-4'>Welcome to HackShark ML mailing system!</h1>
-                    <p className='lead'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. </p>
-                    <hr className='my-4' />
-                </div>
+        <>
+            {isAuthenticated ? null : <Navigate to='/login' />}
 
-                {/* <div className='inner'>
+
+            <div className='ml-2' id="home">
+
+                <div className='jumbotron left'>
+                    <div className='inner'>
+                        <h1 className='display-4'>Welcome to HackShark ML mailing system!</h1>
+                        <p className='lead'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. </p>
+                        <hr className='my-4' />
+                    </div>
+
+                    {/* <div className='inner'>
                 <h1 className='display-4'>Welcome to HackShark ML mailing system!</h1>
                 <p className='lead'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
                     Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
@@ -71,49 +91,50 @@ const Home = ({ preferences, isAuthenticated, user, user_preference_retrieve, us
                 <hr className='my-4' />
             </div> */}
 
-            </div>
+                </div>
 
-            <div className='right'>
-                <div className='inner sticky'>
-                    <div className='tags'>
-                        <Paper
-                            sx={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                flexWrap: 'wrap',
-                                listStyle: 'none',
-                                p: 0.5,
-                                m: 0,
-                            }}
-                            component="ul">
-                            {tagInfo.map((info, index) => (
-                                <ListItem key={index}>
-                                    <Chip
-                                        label={info.label}
-                                        color="primary"
-                                        variant={info.variant}
-                                        onClick={() => handleClick(index)}
-                                    />
-                                </ListItem>
-                            ))}
-                        </Paper>
-                        <Box
-                            sx={{
-                                mx: 'auto',
-                                width: 'inherit',
-                                p: 1,
-                                m: 1,
-                                textAlign: 'center',
-                            }}
-                        >
-                            {saveBtnActive ? <Button sx={{ mt: 3 }} variant="outlined" color="secondary" onClick={handleSaveBtnClick}>Save</Button> : null}
-                        </Box>
+                <div className='right'>
+                    <div className='inner sticky'>
+                        <div className='tags'>
+                            <Paper
+                                sx={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    flexWrap: 'wrap',
+                                    listStyle: 'none',
+                                    p: 0.5,
+                                    m: 0,
+                                }}
+                                component="ul">
+                                {tagInfo.map((info, index) => (
+                                    <ListItem key={index}>
+                                        <Chip
+                                            label={info.label}
+                                            color="primary"
+                                            variant={info.variant}
+                                            onClick={() => handleClick(index)}
+                                        />
+                                    </ListItem>
+                                ))}
+                            </Paper>
+                            <Box
+                                sx={{
+                                    mx: 'auto',
+                                    width: 'inherit',
+                                    p: 1,
+                                    m: 1,
+                                    textAlign: 'center',
+                                }}
+                            >
+                                {saveBtnActive ? <Button sx={{ mt: 3 }} variant="outlined" color="secondary" onClick={handleSaveBtnClick}>Save</Button> : null}
+                            </Box>
+
+                        </div>
 
                     </div>
-
                 </div>
             </div>
-        </div>
+        </>
     );
 }
 
@@ -123,4 +144,4 @@ const mapStateToProps = state => ({
     user: state.auth.user
 });
 
-export default connect(mapStateToProps, { user_preference_retrieve, user_preference_save })(Home);
+export default connect(mapStateToProps, { user_preference_retrieve, user_preference_save, checkAuthenticated })(Home);

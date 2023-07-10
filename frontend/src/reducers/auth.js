@@ -31,12 +31,7 @@ const initialState = {
     refresh: localStorage.getItem('refresh'),
     isAuthenticated: null,
     user: null,
-    preferences: [
-        { "label": "AI", "variant": "outlined" },
-        { "label": "ML", "variant": "outlined" },
-        { "label": "Computer Science", "variant": "outlined" },
-        { "label": "Computer Science", "variant": "outlined" }
-    ],
+    preferences: [],
     preferencePaperAbstracts: []
 };
 

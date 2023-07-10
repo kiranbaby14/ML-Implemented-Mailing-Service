@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logout } from '../actions/auth';
 
@@ -11,11 +11,10 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import { red } from '@mui/material/colors';
+
 
 const Navbar = ({ logout, isAuthenticated }) => {
 
@@ -31,16 +30,6 @@ const Navbar = ({ logout, isAuthenticated }) => {
         setRedirect(true);
     };
 
-    const guestLinks = () => (
-        <>
-            <Link className='nav-link' to='/login'>
-                <Button color="inherit">Login</Button>
-            </Link>
-            <Link className='nav-link' to='/signup'>
-                <Button color="inherit">Signup</Button>
-            </Link>
-        </>
-    );
 
     const authLinks = () => (
         <Box sx={{ flexGrow: 0 }}>
@@ -116,7 +105,7 @@ const Navbar = ({ logout, isAuthenticated }) => {
                                 textDecoration: 'none',
                             }}
                         >
-                            LOGO
+                              MLSys
                         </Typography>
 
                         <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -148,13 +137,13 @@ const Navbar = ({ logout, isAuthenticated }) => {
                                 textDecoration: 'none',
                             }}
                         >
-                            LOGO11
+                            MLSys
                         </Typography>
                         <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         </Box>
 
-                        {/* {isAuthenticated ? authLinks() : guestLinks()} */}
                         {authLinks()}
+
                     </Toolbar>
                 </Container>
             </AppBar>

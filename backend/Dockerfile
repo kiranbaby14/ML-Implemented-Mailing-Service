@@ -15,4 +15,4 @@ RUN pip install -r requirements.txt
 COPY . .
 
 # RUN MIGRATIONS
-RUN python manage.py makemigrations && python manage.py migrate
+# RUN python manage.py makemigrations && python manage.py migrate

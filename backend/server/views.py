@@ -1,11 +1,12 @@
 import json
 import os
+
+from celery import shared_task
 from django.http import HttpResponse
 from django.http import JsonResponse
 import requests
 import re
 from dotenv import load_dotenv
-
 
 load_dotenv()
 
@@ -24,9 +25,12 @@ def user_interests(request):
     return HttpResponse("ooh nice interests!")
 
 
+from rest_framework.decorators import api_view
+
+
+@shared_task
 def api_view_1(request):
     # Make a request to the IEEE API
-    print("yep!!!")
     base_url = "https://api.springernature.com/meta/v2/json"
     # API key
     api_key = os.environ.get('SPRINGER_API_KEY')
@@ -61,6 +65,41 @@ from .models import Tag, UserTagPreference, TagLabels
 def save_user_tag_preference(request):
     tag_ids = eval(str(request.data))
 
+    create_user_tag_preference(request, tag_ids)
+
+    return Response({'message': 'User tag preferences saved.'})
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_user_tag_preference(request):
+    user = request.user
+
+    # Retrieve the user's tag preferences
+    tag_preferences = UserTagPreference.objects.filter(user=user)
+
+    if not tag_preferences:
+        tag_ids = [
+            {"label": "AI", "variant": "outlined"},
+            {"label": "ML", "variant": "outlined"},
+            {"label": "Computer Science", "variant": "outlined"},
+            {"label": "Computer Science", "variant": "outlined"}
+        ]
+
+        create_user_tag_preference(request, tag_ids)
+        tag_preferences = UserTagPreference.objects.filter(user=user)
+
+    # Extract the tag names from the preferences
+    tag_names = [preference.tag.tags for preference in tag_preferences]
+    if tag_names:  # execute only if list is not empty
+        tag_names = re.findall(r'{[^}]+}', tag_names[0])
+        tag_names = [json.loads(dicti) for dicti in tag_names]
+        return Response(tag_names)
+    else:
+        return Response([])
+
+
+def create_user_tag_preference(request, tag_ids):
     # Clear existing user tag preferences
     request.user.usertagpreference_set.all().delete()
 
@@ -86,23 +125,3 @@ def save_user_tag_preference(request):
 
     # Create UserTagPreference instance
     UserTagPreference.objects.create(user=request.user, tag=tag, tag_labels=tag_labels)
-
-    return Response({'message': 'User tag preferences saved.'})
-
-
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def get_user_tag_preference(request):
-    user = request.user
-
-    # Retrieve the user's tag preferences
-    tag_preferences = UserTagPreference.objects.filter(user=user)
-
-    # Extract the tag names from the preferences
-    tag_names = [preference.tag.tags for preference in tag_preferences]
-    if tag_names:  # execute only if list is not empty
-        tag_names = re.findall(r'{[^}]+}', tag_names[0])
-        tag_names = [json.loads(dicti) for dicti in tag_names]
-        return Response(tag_names)
-    else:
-        return Response([])
