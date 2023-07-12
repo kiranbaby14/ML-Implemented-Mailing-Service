@@ -5,3 +5,5 @@ The application is basically a mailing service web-app. The user registers his/h
 - React
 - Celery
 - Docker
+- Redux
+- Sqlite3
