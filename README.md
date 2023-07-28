@@ -10,6 +10,7 @@ The application is basically a mailing service web-app. The user registers his/h
 - Docker
 - Google, Facebook OAuth
 - Google Cloud Platform (GCP)
+- SMTP server
 
 ## Screenshots
 
