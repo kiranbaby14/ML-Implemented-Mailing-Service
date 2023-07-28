@@ -18,13 +18,13 @@ The application is basically a mailing service web-app. The user registers his/h
 ![image](https://github.com/kiranbaby14/ML-Implemented-Mailing-Service/assets/50899339/0a581c02-1265-4509-a0bc-5175509665ed)
 
 ## RUN 
-# Run the Django Server using docker
+### Run the Django Server using docker
 - cd into backend folder
   ```
   docker compose up
   ```
 
-# Run the React frontend application
+### Run the React frontend application
 - cd into frontend folder
 - install the dependencies
   ```
